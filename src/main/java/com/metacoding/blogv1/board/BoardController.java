@@ -18,11 +18,11 @@ public class BoardController {
         this.boardService = boardService;
     }
 
+    // update board_tb set title=?, content=? where id = ?
+    // 주소로 받는 데이터는 전부다 where에 걸린다 (pk,uk는 /1로, 나머지는 ?쿼리스트링)
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable("id") int id, String title, String content) {
-        // update board_tb set title=?, content=? where id = ?
-        // 주소로 받는 데이터는 전부다 where에 걸린다 (pk,uk는 /1로, 나머지는 ?쿼리스트링)
-        System.out.println("id: " + id + " title: " + title + " content: " + content);
+        boardService.게시글수정하기(id, title, content);
         return "redirect:/board/" + id;
     }
 
@@ -60,7 +60,9 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}/update-form")
-    public String updateForm(@PathVariable("id") int id) {
+    public String updateForm(@PathVariable("id") int id, HttpServletRequest request) {
+        Board board = boardService.게시글상세보기(id);
+        request.setAttribute("model", board);
         return "update-form";
     }
 }

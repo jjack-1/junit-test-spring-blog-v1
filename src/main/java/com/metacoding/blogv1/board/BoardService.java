@@ -27,6 +27,8 @@ public class BoardService {
     }
 
     public Board 게시글상세보기(int id) {
+        Board board = boardRepository.findById(id);
+        if (board == null) throw new RuntimeException("이상한 주소좀 떄리지마");
         return boardRepository.findById(id);
     }
 
@@ -42,4 +44,18 @@ public class BoardService {
 
         boardRepository.deleteById(id);
     } // commit
+
+    @Transactional
+    public void 게시글수정하기(int id, String title, String content) {
+        // 1. 게시글이 존재하는 확인
+        Board board = boardRepository.findById(id);
+
+        // 2. 삭제
+        if (board == null) {
+            throw new RuntimeException("게시글이 없는데 왜 수정을 ㅠ");
+        }
+
+        // 3. 수정
+        boardRepository.update(id, title, content);
+    }
 }
