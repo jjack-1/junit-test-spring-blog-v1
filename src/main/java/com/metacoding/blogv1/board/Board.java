@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 
+@ToString
 @Getter
 @AllArgsConstructor // 풀 생성자
 @NoArgsConstructor // 디폴트 생성자
